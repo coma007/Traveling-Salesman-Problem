@@ -1,2 +1,2 @@
-FILENAME = "../data_tsp.txt"
+FILENAME = "data_tsp.txt"
 POINTS = []

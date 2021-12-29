@@ -1,4 +1,4 @@
-import constants as c
+import app.constants as c
 from app.classes.Point import *
 
 
