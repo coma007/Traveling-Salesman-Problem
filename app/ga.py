@@ -29,7 +29,7 @@ def calculate_fitness(generation):
 
 
 def rang(fitness):
-    fitness.sort(reverse=True)
+    fitness.sort()
     scores = {}
     for i in range(len(fitness)):
         scores[(i+1) * random.random()] = fitness[i]
