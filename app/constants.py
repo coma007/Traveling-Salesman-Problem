@@ -1,2 +1,4 @@
 FILENAME = "data_tsp.txt"
 POINTS = []
+
+POPULATION_SIZE = 100

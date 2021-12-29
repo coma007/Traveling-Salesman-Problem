@@ -27,3 +27,13 @@ def calculate_fitness(generation):
         normalize_fitness.append(d/total_fitness)
     return normalize_fitness
 
+
+def rang(fitness):
+    fitness.sort(reverse=True)
+    scores = {}
+    for i in range(len(fitness)):
+        scores[(i+1) * random.random()] = fitness[i]
+    scores = sorted(scores.items())
+    (s1, f1), (s2, f2) = scores[-1], scores[-2]
+    return f1, f2
+
