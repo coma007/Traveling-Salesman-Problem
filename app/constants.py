@@ -1,4 +1,5 @@
-FILENAME = "data_tsp.txt"
+FILENAME = "data.txt"
 POINTS = []
 
-POPULATION_SIZE = 100
+POPULATION_SIZE = 5
+ITERATION = 50
