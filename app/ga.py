@@ -31,10 +31,11 @@ def calculate_fitness(generation):
 
 
 def rang(fitness):
-    fitness.sort()
+    fitness_copy = deepcopy(fitness)
+    fitness_copy.sort()
     scores = {}
     for i in range(len(fitness)):
-        scores[(i+1) * random.random()] = fitness[i]
+        scores[(i+1) * random.random()] = fitness_copy[i]
     scores = sorted(scores.items())
     (s1, f1), (s2, f2) = scores[-1], scores[-2]
     return f1, f2
