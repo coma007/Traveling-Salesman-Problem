@@ -7,11 +7,11 @@ if __name__ == '__main__':
     read_file(c.FILENAME)
     population = create_first_generation(c.POPULATION_SIZE)
     distances, fitness = calculate_fitness(population)
-    best_fitness = np.min(distances)
-    best_route_index = distances.index(best_fitness)
+    best_distance = np.min(distances)
+    best_route_index = distances.index(best_distance)
     best_route = population[best_route_index]
     for i in range(c.ITERATION):
-        print(best_fitness)
+        print(best_distance)
         # print(best_route)
         children = []
         for i in range(c.POPULATION_SIZE):
@@ -22,7 +22,8 @@ if __name__ == '__main__':
         children_distances, children_fitness = calculate_fitness(children)
         population = next_generation(population, distances, children, children_distances, 0)
         distances, fitness = calculate_fitness(population)
-        new_best_fitness = np.min(distances)
-        if new_best_fitness > best_fitness:
-            best_route_index = distances.index(new_best_fitness)
+        new_best_distance = np.min(distances)
+        if new_best_distance < best_distance:
+            best_distance = new_best_distance
+            best_route_index = distances.index(new_best_distance)
             best_route = population[best_route_index]

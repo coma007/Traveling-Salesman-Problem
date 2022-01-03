@@ -41,6 +41,12 @@ def rang(fitness):
 
 
 def get_parents(fitness, generation, fitness1, fitness2):
+    # a, b = 0, 0
+    # while a!=b:
+    #     a = random.randint(0, len(generation))
+    #     b = random.randint(0, len(generation))
+    # parent1 = generation[a]
+    # parent2 = generation[b]
     parent1 = generation[fitness.index(fitness1)]
     parent2 = generation[fitness.index(fitness2)]
     return parent1, parent2
