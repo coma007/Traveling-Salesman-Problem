@@ -1,2 +1,5 @@
 FILENAME = "data_tsp.txt"
 POINTS = []
+
+CANVAS_WIDTH = 1200
+CANVAS_HEIGHT = 700
