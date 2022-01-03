@@ -17,4 +17,4 @@ class Point(object):
 
 
 def distance(pt1, pt2):
-    return sqrt((pt1.x + pt2.x)**2 + (pt1.y + pt2.y)**2)
+    return sqrt((pt1.x - pt2.x)**2 + (pt1.y - pt2.y)**2)
