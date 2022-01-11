@@ -1,15 +1,16 @@
 from utils.classes.City import *
 import random
+from copy import deepcopy
 
 
 class Population(object):
 
     def __init__(self, members=None):
+        if members is not None:
+            members.append(members[0])
         if members is None:
             members = []
         self._members = members
-        if members is not None:
-            self._members.append(self._members[0])
         self._distance = 0
         self.__calculate_distance()
         self._fitness = 0
@@ -35,6 +36,9 @@ class Population(object):
 
     def __contains__(self, value):
         return value in self._members
+
+    def __len__(self):
+        return len(self._members)
 
     def add(self, new_member):
         self._members.append(new_member)
@@ -75,7 +79,18 @@ class Population(object):
             self._distance += distance(self[i], self[i+1])
 
     def __calculate_fitness(self):
-        self._fitness = 1/self._distance
+        if self._distance != 0:
+            self._fitness = 1/self._distance
 
     def shuffle(self):
         random.shuffle(self._members)
+
+    def mutate(self, mutation_rate):
+        mutated_population = deepcopy(self)
+        del mutated_population[len(mutated_population)-1]
+        if random.random() < mutation_rate:
+            swap_index1 = random.randint(0, len(mutated_population) - 1)
+            swap_index2 = random.randint(0, len(mutated_population) - 1)
+            mutated_population[swap_index1], mutated_population[swap_index2] = mutated_population[swap_index2], mutated_population[swap_index1]
+        mutated_population.add(self[0])
+        return mutated_population

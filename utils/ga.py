@@ -108,7 +108,7 @@ def next_generation(parents, parents_distances, children, children_distances, el
     i = 0
     children_distances_sorted = deepcopy(children_distances)
     children_distances_sorted.sort()
-    while len(next_gen) < c.POPULATION_SIZE:
+    while len(next_gen) < c.GENERATION_SIZE:
         next_gen.append(children[children_distances.index(children_distances_sorted[i])])
         i += 1
     return next_gen

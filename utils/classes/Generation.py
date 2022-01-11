@@ -34,6 +34,9 @@ class Generation(object):
     def __contains__(self, value):
         return value in self._populations
 
+    def __len__(self):
+        return len(self._populations)
+
     def add(self, new_population):
         self._populations.append(new_population)
         self.__calculate_total_fitness()
@@ -48,7 +51,12 @@ class Generation(object):
 
     @property
     def best(self):
+        self.__find_best()
         return self._best
+
+    @property
+    def populations(self):
+        return self._populations
 
     def __calculate_total_fitness(self):
         self._total_fitness = 0
@@ -65,3 +73,9 @@ class Generation(object):
             if population.fitness > self._best.fitness:
                 self._best = population
 
+    def mutate(self, mutation_rate):
+        mutated_generation = Generation()
+        generation_for_mutation = deepcopy(self)
+        for population in generation_for_mutation:
+            mutated_generation.add(population.mutate(mutation_rate))
+        return mutated_generation

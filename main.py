@@ -6,7 +6,7 @@ if __name__ == '__main__':
 
     read_file(c.FILENAME)
 
-    population = create_first_generation(c.POPULATION_SIZE)
+    population = create_first_generation(c.GENERATION_SIZE)
     distances, fitness = calculate_fitness(population)
     print(fitness)
     best_distance = np.min(distances)
@@ -17,7 +17,7 @@ if __name__ == '__main__':
         print(best_distance)
         # print(best_route)
         children = []
-        for i in range(c.POPULATION_SIZE):
+        for i in range(c.GENERATION_SIZE):
             fitness1, fitness2 = rang(fitness)
             parent1, parent2 = get_parents(fitness, population, fitness1, fitness2)
             children.append(breed(parent1, parent2))
