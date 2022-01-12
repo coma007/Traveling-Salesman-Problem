@@ -36,7 +36,7 @@ def play(population):
 
     for pt in population:
         print(pt)
-        # draw_point(pt, myCanvas)
+    #     draw_point(pt, myCanvas)
     # connect_dots(population, myCanvas)
 
     root.mainloop()
