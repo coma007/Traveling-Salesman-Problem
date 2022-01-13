@@ -12,7 +12,7 @@ def genetic_algorithm_work():
     :rtype: (list[int], float)
     """
 
-    current_generation = create_first_generation(param.GENERATION_SIZE, param.CITIES)
+    current_generation = create_first_generation(param.POPULATION_SIZE, param.CITIES)
     current_gen_distances, current_gen_fitnesses = calculate_fitness(current_generation)
 
     best_distance = np.min(current_gen_distances)
@@ -21,15 +21,15 @@ def genetic_algorithm_work():
 
     same_result = 0
 
-    for i in range(param.TOTAL_ITERATIONS):
+    for i in range(param.TOTAL_GENERATIONS):
 
         print(f"Iteration: #{i}\nBest route: {list(param.CITIES.index(city) for city in best_route)}\nBest distance: {best_distance}\n")
         children = []
 
-        if same_result > param.ITERATION_STOP:
+        if same_result > param.ALGORITHM_STOP:
             break
 
-        for j in range(param.GENERATION_SIZE):
+        for j in range(param.POPULATION_SIZE):
             future_parent1_fitness, fitness2 = rang(current_gen_fitnesses)
             parent1, parent2 = get_parents(current_gen_fitnesses, current_generation, future_parent1_fitness, fitness2)
             children.append(breed(parent1, parent2))
