@@ -24,20 +24,20 @@ def create_first_generation(population_number, individuals):
     return generation
 
 
-def calculate_fitness(generation):
+def calculate_fitness(population):
     """
-    Funkcija racuna fitnes pojedinacnih populacija i ukupan fitnes generacije, te normalizuje fitnese populacija.
+    Funkcija racuna fitnes pojedinacnih jedinki u populaciji i ukupan fitnes populacije, te normalizuje fitnese pojedinacnih jedinki.
 
-    :param generation: Broj jedinki u populaciji.
-    :type generation: list[list[utils.City.City]]
-    :return: Lista svih udaljenosti i lista svih fitnesa populacija u generaciji.
+    :param population: Populacija.
+    :type population: list[list[utils.City.City]]
+    :return: Lista svih udaljenosti i lista svih fitnesa jedinki u populacija.
     :rtype: (list[float], list[float])
     """
     total_fitness = 0
     distances = []
     normalize_fitness = []
     fitness = []
-    for population in generation:
+    for population in population:
         sum_distance = 0
         for i in range(len(population) - 1):
             sum_distance += distance(population[i], population[i + 1])
@@ -51,7 +51,7 @@ def calculate_fitness(generation):
 
 def rang(fitness):
     """
-    Funkcija rangira populacije prema fitnesu, a zatim vrsi ruletsku selekciju buducih roditelja.
+    Funkcija rangira jedinke prema fitnesu, a zatim vrsi ruletsku selekciju buducih roditelja.
 
     :param fitness: Lista svih fitnesa u populaciji.
     :type fitness: list[float]
@@ -68,14 +68,14 @@ def rang(fitness):
     return f1, f2
 
 
-def get_parents(fitness, generation, fitness1, fitness2):
+def get_parents(fitness, population, fitness1, fitness2):
     """
     Funkcija dobavlja roditeljske populacije na osnovu njihovih fitnesa.
 
     :param fitness: Lista svih fitnesa u populaciji.
     :type fitness: list[float]
-    :param generation: Citava generacija.
-    :type generation: list[list[utils.City.City]]
+    :param population: Citava populacija.
+    :type population: list[list[utils.City.City]]
     :param fitness1: Fitnes prvog roditelja.
     :type fitness1: float
     :param fitness2: Fitnes drugog roditelja.
@@ -83,8 +83,8 @@ def get_parents(fitness, generation, fitness1, fitness2):
     :return: Buduci roditelji.
     :rtype: (list[utils.City.City], list[utils.City.City])
     """
-    parent1 = generation[fitness.index(fitness1)]
-    parent2 = generation[fitness.index(fitness2)]
+    parent1 = population[fitness.index(fitness1)]
+    parent2 = population[fitness.index(fitness2)]
     return parent1, parent2
 
 
@@ -121,54 +121,54 @@ def breed(parent1, parent2):
     return child
 
 
+def mutate_individual(individual, mutation_rate):
+    """
+    Funkcija mutira jedinku.
+
+    :param individual: Jedinka koja se mutira.
+    :type individual: list[utils.City.City]
+    :param mutation_rate: Stepen mutacije.
+    :type mutation_rate: float
+    :return: Mutirana jedinka.
+    :rtype: list[utils.City.City]
+    """
+    if random.random() < mutation_rate:
+        swap_index1 = random.randint(0, len(individual) - 1)
+        swap_index2 = random.randint(0, len(individual) - 1)
+        individual[swap_index1], individual[swap_index2] = individual[swap_index2], individual[swap_index1]
+    individual.append(individual[0])
+    return individual
+
+
 def mutate_population(population, mutation_rate):
     """
     Funkcija mutira populaciju.
 
     :param population: Populacija koja se mutira.
-    :type population: list[utils.City.City]
+    :type population: list[list[utils.City.City]]
     :param mutation_rate: Stepen mutacije.
     :type mutation_rate: float
     :return: Mutirana populacija.
-    :rtype: list[utils.City.City]
-    """
-    if random.random() < mutation_rate:
-        swap_index1 = random.randint(0, len(population) - 1)
-        swap_index2 = random.randint(0, len(population) - 1)
-        population[swap_index1], population[swap_index2] = population[swap_index2], population[swap_index1]
-    population.append(population[0])
-    return population
-
-
-def mutate_generation(generation, mutation_rate):
-    """
-    Funkcija mutira generaciju.
-
-    :param generation: Populacija koja se mutira.
-    :type generation: list[list[utils.City.City]]
-    :param mutation_rate: Stepen mutacije.
-    :type mutation_rate: float
-    :return: Mutirana generacija.
     :rtype: list[list[utils.City.City]]
     """
     mutated_generation = []
-    generation_for_mutation = deepcopy(generation)
+    generation_for_mutation = deepcopy(population)
     for individual in generation_for_mutation:
-        mutated_generation.append(mutate_population(individual, mutation_rate))
+        mutated_generation.append(mutate_individual(individual, mutation_rate))
     return mutated_generation
 
 
 def next_generation(parents, parents_distances, children, children_distances, elite_size):
     """
-    Funkcija kreira novu generaciju na osnovu trenutne generacije i generacije dobijene ukrstanjima u trenutnoj generaciji.
+    Funkcija kreira novu generaciju na osnovu populacije trenutne generacije i populacije dobijene ukrstanjima u trenutnoj generaciji.
 
-    :param parents: Trenutna generacija.
+    :param parents: Populacija trenutne generacije.
     :type parents: list[list[utils.City.City]]
-    :param parents_distances: Lista svih udaljenosti unutar populacija trenutne generacije.
+    :param parents_distances: Lista svih udaljenosti unutar populacije trenutne generacije.
     :type parents_distances: list[float]
-    :param children: Generacija dobijena ukrstanjem unutar populacija iz trenutne generacije.
+    :param children: Populacija dobijena ukrstanjem unutar jedinki iz trenutne generacije.
     :type children: list[list[utils.City.City]]
-    :param children_distances: Lista svih udaljenosti unutar populacija nove generacije.
+    :param children_distances: Lista svih udaljenosti unutar populacije dobijene ukrstanjem.
     :type children_distances: list[float]
     :param elite_size: Elitizam.
     :type elite_size: int

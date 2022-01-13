@@ -34,7 +34,7 @@ def genetic_algorithm_work():
             parent1, parent2 = get_parents(current_gen_fitnesses, current_generation, future_parent1_fitness, fitness2)
             children.append(breed(parent1, parent2))
 
-        children = mutate_generation(children, param.MUTATION_RATE)
+        children = mutate_population(children, param.MUTATION_RATE)
         children_distances, children_fitness = calculate_fitness(children)
 
         current_generation = next_generation(current_generation, current_gen_distances, children, children_distances,
